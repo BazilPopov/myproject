@@ -1,0 +1,293 @@
+{
+
+const int SIZE=9999;
+
+const int OP=26;
+
+char s[800];
+
+float n21=0,V,V1,L,E,T=0,N,n=0,l,l2;
+
+char string1[SIZE] ;
+
+char string2[SIZE]={" "};
+
+UpdateData(TRUE);
+
+char sso[SIZE]="Уберите комментариии пожалуйста";
+
+sprintf_s(string1,(LPCTSTR)mEdit);
+
+for (int jo=0;jo<strlen(string1);jo++)
+
+if (string1[jo]=='/' && string1[jo+1]=='/')
+
+{goto exx;}
+
+for (int jo=0;jo<strlen(string1);jo++)
+
+if (string1[jo]=='/' && string1[jo+1]=='*')
+
+{goto exx;}
+
+for (int jo=0;jo<strlen(string1);jo++)
+
+if (string1[jo]=='*' && string1[jo+1]=='/')
+
+{goto exx;}
+
+mEdit.Replace(_T(">>"), _T(" SL444 "));
+
+mEdit.Replace(_T("<<"), _T(" SP444 "));
+
+mEdit.Replace(_T("\n"), _T(" "));
+
+mEdit.Replace(_T("||"), _T(" pp444 "));
+
+mEdit.Replace(_T(">="), _T(" bm444 "));
+
+mEdit.Replace(_T("<="), _T(" mr444 "));
+
+mEdit.Replace(_T("--"), _T(" minusm444 "));
+
+mEdit.Replace(_T("++"), _T(" inc444 "));
+
+mEdit.Replace(_T("&&"), _T(" up444 "));
+
+mEdit.Replace(_T("!="), _T(" neravno444 "));
+
+mEdit.Replace(_T("=="), _T(" eslravno444 "));
+
+mEdit.Replace(_T(";"), _T(" "));
+
+mEdit.Replace(_T(","), _T(" "));
+
+mEdit.Replace(_T("{"), _T(" "));
+
+mEdit.Replace(_T("}"), _T(" "));
+
+mEdit.Replace(_T("+"), _T(" plus444 "));
+
+mEdit.Replace(_T("-"), _T(" minus444 "));
+
+mEdit.Replace(_T("/"), _T(" delenie444 "));
+
+mEdit.Replace(_T("*"), _T(" umnogenie444 "));
+
+mEdit.Replace(_T("="), _T(" ravno444 "));
+
+mEdit.Replace(_T("^"), _T(" stepen444 "));
+
+mEdit.Replace(_T("<"), _T(" bolshe444 "));
+
+mEdit.Replace(_T(">"), _T(" menshe444 "));
+
+mEdit.Replace(_T("!"), _T(" voskl444 "));
+
+mEdit.Replace(_T("|"), _T(" lol444 "));
+
+mEdit.Replace(_T("&"), _T(" U1444 "));
+
+mEdit.Replace(_T("~"), _T(" prravno444 "));
+
+mEdit.Replace(_T("%"), _T(" PeR4 "));
+
+mEdit.Replace(_T("("), _T(" "));
+
+mEdit.Replace(_T(")"), _T(" "));
+
+sprintf_s(string1,(LPCTSTR)mEdit);
+
+for (int jo=0;jo<strlen(string1);jo++)
+
+if (string1[jo]=='P' && string1[jo+1]=='e' && string1[jo+2]=='R' && string1[jo+3]=='4')
+
+{n21++;}
+
+N=slov(string1);
+
+ud(string1, string2);
+
+n=slov(string2);
+
+V=N*(log(n)/log(2));
+
+V1=(2+n21)*(log(2+n21)/log(2));
+
+L=V1/V;
+
+E=V/L;
+
+T=((E/5+E/6+E/7+E/8+E/9+E/10+E/11+E/12+E/13+E/14+E/15+E/16+E/17+E/18+E/19+E/20)/15);
+
+sprintf_s(s, " Объём программы - %f;\n Потонциальный объём программы (минимум) - %f;\n Уровень сложности - %f;\n Общее число элементарных мысленных различий - %f;\n Примерное время написани кода (сек) - %f; " , V, V1,L,E,T);
+
+MessageBox(s);
+
+if (N>0)
+
+{goto iik;}
+
+exx:
+
+MessageBox(sso);
+
+iik:
+
+return;
+
+}
+
+void ud (char *s, char *b)
+
+{
+
+char *a;
+
+char *p=b, *z=b;
+
+int u=0;
+
+a=pr1(s);
+
+s=pr2(a);
+
+b=copy(a,b,s-a);
+
+char *t=b;
+
+while (*(a=pr1(s)))
+
+{
+
+s=pr2(a);
+
+t=z;
+
+while (*(p=pr1(t)))
+
+{
+
+t=pr2(p);
+
+u=opr(a,p, s-a, t-p);
+
+if(u==0)
+
+continue;
+
+else
+
+break;
+
+}
+
+if (u==0)
+
+b=copy(a,b,s-a);
+
+}
+
+}
+
+int opr (char *t, char *r, int len, int len2)
+
+{
+
+int k=0;
+
+if (len!=len2)
+
+return 0;
+
+else
+
+{
+
+for (int j=0; j<len; j++)
+
+{
+
+if (*t++==*r++)
+
+k=1;
+
+else
+
+{
+
+k=0;
+
+break;
+
+}
+
+}
+
+return k;
+
+}
+
+}
+
+char *pr1(char *in)
+
+{
+
+while (*in&&(*in==' ')||(*in=='\t'))
+
+in++;
+
+return in;
+
+}
+
+char *pr2 (char *in)
+
+{
+
+while (*in&&*in!=' '&&*in!='\t')
+
+in++;
+
+return in;
+
+}
+
+char *copy(char * from, char *to, int len)
+
+{
+
+for (int j=0;(j<len)&&(*to++=*from++);j++);
+
+*to++=' ';
+
+*to='\0';
+
+return to;
+
+}
+
+size_t slov(const char* text)
+
+{
+
+float count = 0;
+
+while(*text)
+
+{
+
+while(*text && isspace(*text) ) ++text;
+
+if(!(*text) ) break;
+
+++count;
+
+while(*text && !isspace(*text) ) ++text;
+
+}
+
+return count;
+
+}
